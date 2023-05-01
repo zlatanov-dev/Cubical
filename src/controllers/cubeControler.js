@@ -18,7 +18,7 @@ exports.getDetails = (req, res) => {
     let cube = db.cubes.find(x => x.id === cubeId);
 
     if(!cubeId || !cube) {
-        return res.redirect('404');
+        return res.redirect('/404');
     }
 
     res.render('details', {cube})

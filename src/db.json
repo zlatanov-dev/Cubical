@@ -27,13 +27,6 @@
       "description": "test",
       "imageUrl": "https://images-na.ssl-images-amazon.com/images/I/61HpQqVQ37L._SY355_.jpg",
       "difficultyLevel": "3"
-    },
-    {
-      "name": "152",
-      "description": "512512",
-      "imageUrl": "152",
-      "difficultyLevel": "1",
-      "id": 5
     }
   ]
 }
