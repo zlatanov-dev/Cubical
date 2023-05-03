@@ -6,7 +6,7 @@ exports.getHomePage = (req, res) => {
 
   if (search) {
     cubes = cubes.filter((cube) =>
-      cube.name.toLocaleLowerCase().includes(search.toLocaleLowerCase()));
+      cube.name.toLowerCase().includes(search.toLowerCase()));
   }
 
   if (difficultyFrom) {
