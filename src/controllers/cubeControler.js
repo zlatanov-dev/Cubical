@@ -12,13 +12,16 @@ exports.postCreateCube = async (req, res) => {
     res.redirect('/');
 };
 
-exports.getDetails = (req, res) => {
-    let cubeId = Number(req.params.cubeId);
-    let cube = db.cubes.find(x => x.id === cubeId);
+exports.getDetails = async (req, res) => {
+    try {
+        const cube = await Cube.findById(req.params.cubeId).lean();
 
-    if(!cubeId || !cube) {
-        return res.redirect('/404');
+        if(!cube) {
+            throw new Error('Invalid cube id!');
+        }
+
+        res.render('details', { cube });
+    } catch(err) {
+        return res.redirect('/404'); // or handle the error in some other way
     }
-
-    res.render('details', {cube})
 };
