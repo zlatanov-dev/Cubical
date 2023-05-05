@@ -12,7 +12,4 @@ router.post('/create', async (req, res) => {
     res.redirect('/');
 });
 
-router.get('/attach', (req, res) => {
-   res.render('accessory/attach'); 
-});
 module.exports = router;
