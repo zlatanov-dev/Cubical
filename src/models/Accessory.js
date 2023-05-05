@@ -8,6 +8,12 @@ const accessorySchema = new Schema({
     imageUrl: {
         type: String,
         required: true,
+        validate: {
+            validator: function(value) {
+                return value.startsWith('http://') || value.startsWith('https://');
+            },
+            message: 'Invalid URL!',
+        }
     },
     description: {
         type: String,
