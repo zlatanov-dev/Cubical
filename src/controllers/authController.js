@@ -8,4 +8,14 @@ router.get('/register', (req, res) => {
     res.render('auth/register');
 });
 
+router.post('/register', (req, res) => {
+    const {username, password, repeatPassword} = req.body;
+
+    if(password !== repeatPassword) {
+        return res.status(404).end();
+    }
+    
+    console.log(username + ' ' + password);
+
+});
 module.exports = router;
