@@ -6,5 +6,9 @@ exports.getOne = (cubeId) => {
 
 exports.update = (cubeId, data) => {
     // Run validate data
-    return Cube.findByIdAndUpdate(cubeId, data, {runValidators: true})
+    return Cube.findByIdAndUpdate(cubeId, data, {runValidators: true});
+}
+
+exports.delete = (cubeId) => { 
+    return Cube.findByIdAndDelete(cubeId);
 };
