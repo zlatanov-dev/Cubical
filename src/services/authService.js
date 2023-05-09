@@ -1,6 +1,6 @@
 const User = require('../models/User');
 const config = require('../config/configuration');
-const jwt = require('../lib/jsonwebtoken');
+const jwt = require('../utils/jsonwebtoken');
 
 exports.getUserByUsername =  (username) => {
     return User.findOne({username});

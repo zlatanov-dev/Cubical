@@ -1,4 +1,4 @@
-const jwt = require('../lib/jsonwebtoken');
+const jwt = require('../utils/jsonwebtoken');
 const config = require('../config/configuration');
 
 
