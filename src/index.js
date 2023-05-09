@@ -5,14 +5,16 @@ const routes = require('./router/routes');
 const config = require('./config/configuration');
 const viewEngineSetup = require('./config/viewEngine');
 const initDatabase = require('./config/initDatabase');
-const app = express();
+const authMiddleware = require('./middlewares/authMiddleware')
 
+const app = express();
 // Configure Express-Handlebars
 viewEngineSetup(app);
 
 app.use(express.static('./public'));
 app.use(cookieParser());
 app.use(express.urlencoded({extended: false}));
+app.use(authMiddleware.authentication);
 app.use(routes);
 
 // Initialize the database

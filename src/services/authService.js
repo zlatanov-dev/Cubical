@@ -1,13 +1,13 @@
 const User = require('../models/User');
 const config = require('../config/configuration');
-const jwt = require('../lib/jsonwebtoken');
+const jwt = require('../utils/jsonwebtoken');
 
 exports.getUserByUsername =  (username) => {
     return User.findOne({username});
 };
 
 exports.register = async (username, password) => {
-        await User.create({username,password});
+    return await User.create({username,password});
 };
 
 exports.login = async (username, password) => {
