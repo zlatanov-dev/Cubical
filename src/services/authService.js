@@ -1,4 +1,6 @@
 const User = require('../models/User');
+const config = require('../config/configuration');
+const jwt = require('../lib/jsonwebtoken');
 
 exports.getUserByUsername =  (username) => {
     return User.findOne({username});
@@ -15,6 +17,9 @@ exports.login = async (username, password) => {
         throw 'Invalid username or password!';
     }
 
-    return user;
+    const payload = {username: user.username};
+    const token = await jwt.sign(payload, config.SECRET, {expiresIn: '24h'});
+
+    return token;
 
 };
