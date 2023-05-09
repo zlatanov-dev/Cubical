@@ -37,4 +37,10 @@ router.post('/register', async (req, res) => {
     const user = await authService.register(username, password);
     res.redirect('/login')
 });
+
+router.get('/logout', async (req, res) => {
+    res.clearCookie('auth');
+    res.redirect('/');
+});
+
 module.exports = router;
