@@ -11,6 +11,7 @@
             <label for="difficulty">Difficulty</label>
             <select id="difficulty" name="difficultyLevel" />
                 {{#each difficultyLevel}}
+                    {{>difficultyLevel}}
                 <option value="{{key}}" {{#if selected}}selected{{/if}}>{{key}} - {{label}}</option>
                 {{/each}}
             </select>
