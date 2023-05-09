@@ -1,21 +1,41 @@
 const router = require('express').Router();
+const authService = require('../services/authService');
 
 router.get('/login', (req, res) => {
     res.render('auth/login');
+});
+
+router.post('/login', async (req, res) => {
+    const {username, password} = req.body;
+    try{
+        const token = await authService.login(username, password);
+        console.log(token);
+    } catch (err) {
+        console.log(err);
+        return res.redirect('/login');
+    }
+
+    res.redirect('/');
 });
 
 router.get('/register', (req, res) => {
     res.render('auth/register');
 });
 
-router.post('/register', (req, res) => {
+router.post('/register', async (req, res) => {
     const {username, password, repeatPassword} = req.body;
 
     if(password !== repeatPassword) {
-        return res.status(404).end();
+        return res.redirect('/404');
     }
-    
-    console.log(username + ' ' + password);
 
+    const existingUser = await authService.getUserByUsername(username);
+    
+    if(existingUser){
+        return res.redirect('/404');
+    }
+    await authService.register(username, password);
+
+    res.redirect('/login')
 });
 module.exports = router;
