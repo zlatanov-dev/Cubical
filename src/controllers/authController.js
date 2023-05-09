@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const authService = require('../services/authService');
 
 router.get('/login', (req, res) => {
     res.render('auth/login');
@@ -8,14 +9,20 @@ router.get('/register', (req, res) => {
     res.render('auth/register');
 });
 
-router.post('/register', (req, res) => {
+router.post('/register', async (req, res) => {
     const {username, password, repeatPassword} = req.body;
 
     if(password !== repeatPassword) {
-        return res.status(404).end();
+        return res.redirect('/404');
     }
-    
-    console.log(username + ' ' + password);
 
+    const existingUser = await authService.getUserByUsername(username);
+    
+    if(existingUser){
+        return res.redirect('/404');
+    }
+    const user = await authService.register(username, password);
+
+    res.redirect('/login')
 });
 module.exports = router;
