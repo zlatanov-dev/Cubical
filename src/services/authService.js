@@ -7,7 +7,7 @@ exports.getUserByUsername =  (username) => {
 };
 
 exports.register = async (username, password) => {
-        await User.create({username,password});
+    return await User.create({username,password});
 };
 
 exports.login = async (username, password) => {
