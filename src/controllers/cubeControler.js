@@ -11,7 +11,8 @@ exports.postCreateCube = async (req, res) => {
   const { name, description, imageUrl, difficultyLevel } = req.body;
 
   try {
-    let cube = new Cube({ name, description, imageUrl, difficultyLevel });
+    let cube = new Cube({ name, description, imageUrl, difficultyLevel, owner: req.user._id });
+
     await cube.save();
     res.redirect("/");
   } catch (err) {
@@ -29,8 +30,8 @@ exports.getDetails = async (req, res) => {
     if (!cube) {
       throw new Error("Invalid cube id!");
     }
-
-    res.render(`cube/details`, { cube });
+    const isOwner = req.user._id == cube.owner;
+    res.render(`cube/details`, { cube, isOwner });
   } catch (err) {
     return res.redirect("/404");
   }
@@ -57,6 +58,9 @@ exports.getEditCube = async (req, res) => {
   const difficultyLevel = cubeUtils.generateDificultyLevels(
     cube.difficultyLevel
   );
+  if(!cubeUtils.isOwner(req.user, cube)) {
+    res.redirect("/404");
+  }
   res.render("cube/edit", { cube, difficultyLevel });
 };
 
@@ -82,5 +86,5 @@ exports.getDeleteCube = async (req, res) => {
 
 exports.postDeleteCube = async (req, res) => {
   await cubeService.delete(req.params.cubeId);
-  res.redirect('/');
+  res.redirect("/");
 };
