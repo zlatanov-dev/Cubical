@@ -11,10 +11,10 @@ router.post('/login', async (req, res) => {
         const token = await authService.login(username, password);
         res.cookie('auth', token, {httpOnly: true});
     } catch (err) {
-        console.log(err);
-        return res.redirect('/login');
+        console.log(err.message);
+        return res.render('auth/login', {error: err.message});
     }
-
+    res.render()
     res.redirect('/');
 });
 
@@ -26,13 +26,13 @@ router.post('/register', async (req, res) => {
     const {username, password, repeatPassword} = req.body;
 
     if(password !== repeatPassword) {
-        return res.redirect('/404');
+       return res.render('auth/register', {error: err.message});
     }
 
     const existingUser = await authService.getUserByUsername(username);
     
     if(existingUser){
-        return res.redirect('/404');
+        throw new Error("Username already exists!");
     }
     const user = await authService.register(username, password);
     res.redirect('/login')

@@ -30,7 +30,7 @@ exports.getDetails = async (req, res) => {
     if (!cube) {
       throw new Error("Invalid cube id!");
     }
-    const isOwner = req.user._id == cube.owner;
+    const isOwner = cube.cubeUtils.isOwner(req.user, cube);
     res.render(`cube/details`, { cube, isOwner });
   } catch (err) {
     return res.redirect("/404");
@@ -59,7 +59,7 @@ exports.getEditCube = async (req, res) => {
     cube.difficultyLevel
   );
   if(!cubeUtils.isOwner(req.user, cube)) {
-    res.redirect("/404");
+    return res.redirect("/404");
   }
   res.render("cube/edit", { cube, difficultyLevel });
 };
