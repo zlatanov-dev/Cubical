@@ -26,15 +26,20 @@ router.post('/register', async (req, res) => {
     const {username, password, repeatPassword} = req.body;
 
     if(password !== repeatPassword) {
-       return res.render('auth/register', {error: err.message});
+       return res.render('auth/register', {error: "Passwords don\'t match!"});
     }
 
     const existingUser = await authService.getUserByUsername(username);
     
     if(existingUser){
-        throw new Error("Username already exists!");
+       return res.render('auth/register', {error: "Username already exists!"});
     }
-    const user = await authService.register(username, password);
+
+    try{
+        await authService.register(username, password);
+    } catch(err) {
+
+    }
     res.redirect('/login')
 });
 
