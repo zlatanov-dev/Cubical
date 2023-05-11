@@ -5,7 +5,8 @@ const routes = require('./router/routes');
 const config = require('./config/configuration');
 const viewEngineSetup = require('./config/viewEngine');
 const initDatabase = require('./config/initDatabase');
-const authMiddleware = require('./middlewares/authMiddleware')
+const authMiddleware = require('./middlewares/authMiddleware');
+const { errorHandler } = require('./middlewares/errorHandlerMiddleware');
 
 const app = express();
 // Configure Express-Handlebars
@@ -16,6 +17,8 @@ app.use(cookieParser());
 app.use(express.urlencoded({extended: false}));
 app.use(authMiddleware.authentication);
 app.use(routes);
+app.use(errorHandler);
+
 
 // Initialize the database
 initDatabase()

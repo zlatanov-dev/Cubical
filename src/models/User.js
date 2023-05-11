@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true,
-        minLength: [8, 'Password is too short!'],
+        minLength: [5, 'Password is too short!'],
         validate: {
             validator: function(value) {
                 return /^[a-zA-Z0-9]+$/.test(value);

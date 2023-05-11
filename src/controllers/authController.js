@@ -36,9 +36,11 @@ router.post('/register', async (req, res) => {
     }
 
     try{
-        await authService.register(username, password);
-    } catch(err) {
-
+         await authService.register(username, password);
+        } catch(err) {
+        const error = Object.keys(err.errors).map(key => err.errors[key].message);
+        console.log(error);
+        return res.render('auth/register', {error: error[0]});
     }
     res.redirect('/login')
 });
