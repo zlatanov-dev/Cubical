@@ -14,7 +14,6 @@ router.post('/login', async (req, res) => {
         console.log(err.message);
         return res.render('auth/login', {error: err.message});
     }
-    res.render()
     res.redirect('/');
 });
 

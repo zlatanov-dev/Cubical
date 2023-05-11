@@ -30,7 +30,10 @@ exports.getDetails = async (req, res) => {
     if (!cube) {
       throw new Error("Invalid cube id!");
     }
-    const isOwner = cube.cubeUtils.isOwner(req.user, cube);
+    if(!req.user){
+      return res.render(`cube/details`, { cube });
+    }
+    const isOwner = cubeUtils.isOwner(req.user, cube);
     res.render(`cube/details`, { cube, isOwner });
   } catch (err) {
     return res.redirect("/404");
